@@ -1,0 +1,19 @@
+version: "3.1"
+services:
+  drupal:
+    image: gauravbapat93/custom-drupal
+    build: ./drupal/
+    ports:
+      - "8080:80"
+
+  postgres:
+    environment:
+      - POSTGRES_PASSWORD_FILE=/run/secrets/pgsql_password
+    secrets:
+      - pgsql_password
+    volumes:
+      - ./sample-data:/var/lib/postgresql/data
+
+secrets:
+  pgsql_password:
+    file: psql-fake-password.txt
